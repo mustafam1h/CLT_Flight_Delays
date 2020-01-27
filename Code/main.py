@@ -43,4 +43,5 @@ for flight in flight_name:
     ax = plt.subplot(len(flight_name),1 ,1+i)
     plot(data,flight,ax)
     i=i+1
+	#plt.show() uncomment this line if you want to see each pdf alone 
 plt.show()
