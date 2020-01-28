@@ -45,3 +45,21 @@ for flight in flight_name:
     i=i+1
 	#plt.show() uncomment this line if you want to see each pdf alone 
 plt.show()
+
+plt.figure(figsize=(80, 10))
+sns.boxplot(x='name',y='arr_delay',data=data)
+plt.show()
+
+
+#check flight with maximuim number of arriving before or before delay 
+maxname = ''
+max_num = 0
+for name in flight_name:
+  nums = data[data['name'] == name]['arr_delay']
+  counts = nums.apply(lambda x:1 if x <= 0 else 0)
+  count = counts.sum()
+  if max_num < count / nums.count():
+    max_num = count / nums.count()
+    maxname = name
+print(maxname)
+
