@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 
@@ -62,4 +63,33 @@ for name in flight_name:
     max_num = count / nums.count()
     maxname = name
 print(maxname)
+
+
+mean_all = data['arr_delay'].mean()
+std_all = data['arr_delay'].std()
+print(mean_all,std_all)
+
+def GaussianPlot(means,ax,sample):
+  f=sns.distplot(means,kde=True,ax=ax,label='mean: '+ str(np.array(means).mean()) + ' std: '+str(np.array(means).std()))
+  f.set(xlim=(-50, 50))
+  ax.set_title('Histogram of mean with sample size = %d' % sample, size = 10)
+  ax.set_xlabel('Delay (min)', size = 15)
+  ax.set_ylabel('Flights', size= 15)
+  ax.legend()
+ 
+
+samples_size = [10,100,1000,10000]
+i=0
+fig,axes = plt.subplots(2,2,figsize=(30,10))
+axes = axes.flatten()
+for sample in samples_size:
+  means = []
+  for _ in range(100):
+    idx = np.random.choice(data.count()[0],sample)
+    nums = data.iloc[idx]['arr_delay']
+    means.append(nums.mean())
+  GaussianPlot(means,axes[i],sample)
+  i=i+1
+plt.show()
+#print(data.count()[0])
 
